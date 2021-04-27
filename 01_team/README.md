@@ -170,8 +170,7 @@ HTML을 설계할 때 반응형 웹사이트를 만들기 위해서는 디바이
 
 브라우저에서 전통적으로 픽셀과 뷰포트는 1:1의 크기로 계산되어 100px은 디스플레이에서 100px을 뜻하고 있었습니다. 하지만 점점 디바이스의 디스플레이가 가진 픽셀밀도(PPI)가 높아지게 되면서 1:1 매칭을 통한 뷰포트 계산은 실제로 화면에 너무 작게 표시되는 문제가 발생했습니다. 이를 해결하기 위해 OS단에서는 HiDPI와 같이 픽셀밀도를 계산하여 디스플레이에 표시해주는 기능들이 생겨나기 시작했습니다. 웹에서도 이에 대응하여 뷰포트를 통해 디바이스의 픽셀밀도를 계산하여 화면에 출력해 줄 수 있습니다.
 
-> 픽셀 밀도를 표현하는 방법은 DPR이 있습니다. DPR은 Device Pixel Ratio의 약자로 디바이스에서 인식하는 1픽셀과 실제 디스플레이에서 표현할 때의 비율을 나타내는 방법으로 만약 DPR이 2.0이라면, 디바이스의 1픽셀이 디스플레이에서는 4(2x2)픽셀로 표시되고 있음을 나타냅니다. 우리는 편의상 이를 배율이라 부르겠습니다.<br>
-> <img src="./img/09.png" width="400" alt="" />
+> 픽셀 밀도를 표현하는 방법은 DPR이 있습니다. DPR은 Device Pixel Ratio의 약자로 디바이스에서 인식하는 1픽셀과 실제 디스플레이에서 표현할 때의 비율을 나타내는 방법으로 만약 DPR이 2.0이라면, 디바이스의 1픽셀이 디스플레이에서는 4(2x2)픽셀로 표시되고 있음을 나타냅니다. 우리는 편의상 이를 배율이라 부르겠습니다.<br> > <img src="./img/09.png" width="400" alt="" />
 
 #### 2.1.2 뷰포트 메타태그
 
@@ -248,13 +247,19 @@ HTML을 설계할 때 반응형 웹사이트를 만들기 위해서는 디바이
 모바일 디바이스에서는 핀치 줌 / 아웃을 통해 표시되는 영역을 확대하거나 축소할 수 있습니다. 하지만 이를 제한하거나 방지해서 사용자가 컨텐츠에 원치 않는 방법으로 접근하는 것을 방지할 수 있습니다. 다음과 같은 설정을 통해 최대 확대 배율과 최대 축소 배율등을 정할 수 있습니다.
 
 ```html
-<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0" />
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0"
+/>
 ```
 
 메타태그를 위와 같이 수정해서 핀치줌 / 아웃을 통해 최대 2배로 확대할 수 있고 최대 1/2배로 축소할 수 있도록 지정하였습니다. 만약 핀치줌 / 아웃을 완전히 방지하려면 다음과 같이 설정할 수 있습니다.
 
 ```html
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1, user-scalable=no"
+/>
 ```
 
 ---
@@ -308,13 +313,16 @@ CSS의 미디어쿼리를 통해 이런 기능을 제공할 수도 있지만, HT
 위의 이미지가 선명해 지는 이유는, 배율이 계산된 이미지의 실제 크기가 300px로 출력되야 하기 때문에 300w 디스크립터로 지정한 300px.png 이미지가 출력되기 때문입니다. 하지만 width값을 고정으로 하는 건 좋지 않습니다.
 
 ```html
-<img src="./img/100px.png" srcset="./img/100px.png 1x, ./img/200px.png 2x, ./img/300px.png 3x" alt="" />
+<img
+  src="./img/100px.png"
+  srcset="./img/100px.png 1x, ./img/200px.png 2x, ./img/300px.png 3x"
+  alt=""
+/>
 ```
 
 이번에는 픽셀밀도를 지정할 수 있습니다. 1배율(1DPR)에서는 해상도 100px 이미지를 2배율(2DPR)에서는 해상도 200px이미지를 3배율(3DPR)에서는 해상도 300px이미지를 보여주라는 의미입니다.
 
 참고로 이곳에 입력된 디스크립터 혹은 배율은 상한값을 지정하는 것 입니다. 즉 100w는 0\~100w를 포함하며 200w는 101w\~200w, 300w는 201w\~300w를 뜻하며 이는 배율로 지정할 때도 마찬가지 입니다.
-
 
 #### 2.2.1 `sizes`속성
 
@@ -330,7 +338,6 @@ CSS의 미디어쿼리를 통해 이런 기능을 제공할 수도 있지만, HT
 ```
 
 뷰포트의 크기가 0\~400px일 때는 이미지 콘테이너의 크기를 120px로, 401\~600px일 때는 220px, 601\~900px일 때는 320px, 900px\~ 는 500px로 표시하라고 지정한 것 입니다. 동시에 srcset의 효과를 받아서 픽셀밀도에도 맞춰지기 때문에 이미지가 깨질 일도 없습니다.
-
 
 > width속성과 다르게 sizes의 경우 srcset에서 w 디스크립터로 계산될 이미지의 크기를 지정해 줄 수 있습니다. 때문에 단일 이미지의 크기더라도 srcset의 w 디스크립터를 사용한다면 sizes속성을 이용 해 주시는 것이 좋습니다.
 
@@ -434,49 +441,49 @@ video {
 
 #### 3.3.1 calc()
 
-`calc()`를 이용하면 CSS 속성값으로 계산식을 지정할 수 있습니다. 함수 사용시 +와 - 연산자는 좌우에 공백이 있어야 합니다. 고정된 너비의 여백을 가진 요소를 쉽게 배치할 수 있습니다.
+- `calc()`를 이용하면 CSS 속성값으로 계산식을 지정할 수 있습니다. 함수 사용시 +와 - 연산자는 좌우에 공백이 있어야 합니다. 고정된 너비의 여백을 가진 요소를 쉽게 배치할 수 있습니다.
 
-```css
-/* property: calc(expression) */
-width: calc(100% - 80px);
-```
-
-아래와 같이 현수막의 너비가 화면에 꽉 차면서 좌우 여백으로 40픽셀을 가지도록 지정할 수 있습니다.
-
-```css
-.banner {
+  ```css
+  /* property: calc(expression) */
   width: calc(100% - 80px);
-  border: 1px solid black;
-  padding: 6px;
-  text-align: center;
-  box-sizing: border-box;
-}
-```
+  ```
 
-```html
-<div class="banner">이건 현수막입니다!</div>
-```
+- 아래와 같이 현수막의 너비가 화면에 꽉 차면서 좌우 여백으로 40픽셀을 가지도록 지정할 수 있습니다.
 
-calc() 의 브라우저 호환성은 다음과 같습니다.
-![calc 브라우저 호환성](./img/calc.JPG)
+  ```css
+  .banner {
+    width: calc(100% - 80px);
+    border: 1px solid black;
+    padding: 6px;
+    text-align: center;
+    box-sizing: border-box;
+  }
+  ```
+
+  ```html
+  <div class="banner">이건 현수막입니다!</div>
+  ```
+
+- calc() 의 브라우저 호환성은 다음과 같습니다.
+  ![calc 브라우저 호환성](./img/calc.JPG)
 
 #### 3.3.2 min(), max()
 
-CSS 속성값 지정에 min, max 함수를 사용할 수 있습니다. 길이, 빈도수, 각도, 시간, 퍼센트, 숫자, 정수를 사용하는 곳에 허용됩니다.
+- CSS 속성값 지정에 min, max 함수를 사용할 수 있습니다. 길이, 빈도수, 각도, 시간, 퍼센트, 숫자, 정수를 사용하는 곳에 허용됩니다.
 
-`width: max(20vw, 400px); ` 를지정하면 박스의 최소 너비는 400px이고 뷰포트가 2000px 보다 클 경우(20vw = 20 _ 1vw = 20 _ 20px = 400px) 20vw 계산값이 적용됩니다.
+  `width: max(20vw, 400px); ` 를지정하면 박스의 최소 너비는 400px이고 뷰포트가 2000px 보다 클 경우(20vw = 20 _ 1vw = 20 _ 20px = 400px) 20vw 계산값이 적용됩니다.
 
-min(), max() 의 브라우저 호환성은 다음과 같습니다.
-![min, max 브라우저 호환성](./img/minmax.JPG)
+- min(), max() 의 브라우저 호환성은 다음과 같습니다.
+  ![min, max 브라우저 호환성](./img/minmax.JPG)
 
 #### 3.3.3 clamp(minimum, preferred, maximum)
 
-뷰포트의 너비가 증가함에 따라 최소 크기와 최대 크기 사이에서 선형적으로 크기를 조절할 때 CSS clamp함수를 사용할 수 있습니다. `width: clamp(300px, 50%, 800px` 일 때 반환되는 값은 50%(선호하는 값, preferred)를 계산한 값이 적용되는데 만약 계산한 값이 300px 보다 작다면 최소값 300px이, 800px보다 크다면 최대값 800px이 적용됩니다. 따라서 아래 그림처럼 항상 50%를 유지하되 300px 이하로는 줄어드지 않고 800px 이상으로는 커지지 않는 박스를 만들 때 또는 폰트 크기를 지정할 때 유용합니다.
+- 뷰포트의 너비가 증가함에 따라 최소 크기와 최대 크기 사이에서 선형적으로 크기를 조절할 때 CSS clamp함수를 사용할 수 있습니다. `width: clamp(300px, 50%, 800px` 일 때 반환되는 값은 50%(선호하는 값, preferred)를 계산한 값이 적용되는데 만약 계산한 값이 300px 보다 작다면 최소값 300px이, 800px보다 크다면 최대값 800px이 적용됩니다. 따라서 아래 그림처럼 항상 50%를 유지하되 300px 이하로는 줄어드지 않고 800px 이상으로는 커지지 않는 박스를 만들 때 또는 폰트 크기를 지정할 때 유용합니다.
 
-![CSS clamp 함수](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbT0Ily%2FbtqKy6brKT1%2FoKKj0lceFteIZkCTS5DGwk%2Fimg.png)
+  ![CSS clamp 함수](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbT0Ily%2FbtqKy6brKT1%2FoKKj0lceFteIZkCTS5DGwk%2Fimg.png)
 
-clamp() 의 브라우저 호환성은 다음과 같습니다.
-![clamp 브라우저 호환성](./img/calc.JPG)
+- clamp() 의 브라우저 호환성은 다음과 같습니다.
+  ![clamp 브라우저 호환성](./img/calc.JPG)
 
 - min, max, calc, clamp 함수를 사용한 예시입니다. [화면](https://mdn.github.io/css-examples/min-max-clamp/) 에서 확인해볼 수 있습니다.
 
@@ -500,10 +507,14 @@ clamp() 의 브라우저 호환성은 다음과 같습니다.
   ```html
   <h1>Simple responsive test</h1>
   <p>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. In orci orci, eleifend id risus nec, mattis rutrum velit.
-    Suspendisse fringilla egestas ---
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. In orci orci,
+    eleifend id risus nec, mattis rutrum velit. Suspendisse fringilla egestas
+    ---
   </p>
-  <p>Integer rutrum sollicitudin tellus, quis cursus nulla scelerisque nec. Nunc eu facilisis lorem. Maecenas ---</p>
+  <p>
+    Integer rutrum sollicitudin tellus, quis cursus nulla scelerisque nec. Nunc
+    eu facilisis lorem. Maecenas ---
+  </p>
   ```
 
 <hr />
@@ -512,54 +523,54 @@ clamp() 의 브라우저 호환성은 다음과 같습니다.
 
 #### 3.4.1 flexbox 를 이용한 레이아웃
 
-반응형 웹디자인에서 flexbox를 이용하면 flex-grow 및 flex-shrink 속성을 통해 공간이 남거나 부족할 경우에도 원하는 레이아웃을 설정할 수 있습니다.
+- 반응형 웹디자인에서 flexbox를 이용하면 flex-grow 및 flex-shrink 속성을 통해 공간이 남거나 부족할 경우에도 원하는 레이아웃을 설정할 수 있습니다.
 
-```css
-.items {
-  display: flex;
-  justify-content: space-between;
-}
-```
+  ```css
+  .items {
+    display: flex;
+    justify-content: space-between;
+  }
+  ```
 
-![플렉스 레이아웃](./img/flex.JPG)
+  ![플렉스 레이아웃](./img/flex.JPG)
 
-flexbox 의 브라우저 호환성은 다음과 같습니다.
-![flexbox 브라우저 호환성](./img/flex-browser.JPG)
+- flexbox 의 브라우저 호환성은 다음과 같습니다.
+  ![flexbox 브라우저 호환성](./img/flex-browser.JPG)
 
 #### 3.4.2 grid 와 fr 단위를 이용한 레이아웃
 
-반응형 웹디자인에서 grid와 `fr`단위를 이용하여 레이아웃을 구현할 수 있습니다. fr 단위는 그리드 컨테이너의 여유 공간을 비율로 나눠 설정합니다.
+- 반응형 웹디자인에서 grid와 `fr`단위를 이용하여 레이아웃을 구현할 수 있습니다. fr 단위는 그리드 컨테이너의 여유 공간을 비율로 나눠 설정합니다.
 
-```css
-.container {
-  display: grid;
-  grid-template-columns: 1fr 3fr;
-}
-```
+  ```css
+  .container {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+  }
+  ```
 
-![그리드 레이아웃](./img/grid.JPG)
+  ![그리드 레이아웃](./img/grid.JPG)
 
-grid 의 브라우저 호환성은 다음과 같습니다.
-![grid 브라우저 호환성](./img/grid-browser.JPG)
+- grid 의 브라우저 호환성은 다음과 같습니다.
+  ![grid 브라우저 호환성](./img/grid-browser.JPG)
 
 - flex와 grid를 사용한 반응형 웹디자인 예시입니다. [화면](https://mdn.github.io/css-examples/learn/media-queries/grid.html) 과 [소스코드](https://github.com/mdn/css-examples/blob/master/learn/media-queries/grid.html)를 확인할 수 있습니다.  
   ![flex, grid 레이아웃](./img/layout.JPG)
 
 #### 3.4.3 column-width 를 이용한 다단 레이아웃
 
-column-width 속성을 이용한 다단 레이아웃(Multiple-column layout)을 통해 반응형 웹디자인을 구현할 수 있습니다.
+- column-width 속성을 이용한 다단 레이아웃(Multiple-column layout)을 통해 반응형 웹디자인을 구현할 수 있습니다.
 
-```css
-.container {
-  column-width: 200px;
-  column-gap: 20px;
-}
-```
+  ```css
+  .container {
+    column-width: 200px;
+    column-gap: 20px;
+  }
+  ```
 
-![다단 레이아웃](./img/multi-column.JPG)
+  ![다단 레이아웃](./img/multi-column.JPG)
 
-column-width 의 브라우저 호환성은 다음과 같습니다.  
-![column-width 브라우저 호환성](./img/column-width.JPG)
+- column-width 의 브라우저 호환성은 다음과 같습니다.  
+  ![column-width 브라우저 호환성](./img/column-width.JPG)
 
 <hr />
 
@@ -638,10 +649,15 @@ column-width 의 브라우저 호환성은 다음과 같습니다.
 #### 3.5.3 미디어타입
 
 - all
+
   모든 미디어에 해당합니다.
+
 - screen
+
   컴퓨터 모니터, 태블릿, 스마트폰 등을 대상으로 하는 타입입니다. 화면을 출력하는 디스플레이가 있는 미디어들은 모두 screen에 해당합니다.
+
 - print
+
   프린트 미리보기 모드 또는 PDF에 해당하는 타입입니다. 아래 예시와 같이 웹사이트를 인쇄할 경우 적용되는 스타일을 추가할 수 있습니다. 실제 인쇄를 하지 않더라도 브라우저에서 제공하는 인쇄 미리보기 기능을 이용하면 화면으로 확인이 가능합니다.
 
   ```css
@@ -651,12 +667,13 @@ column-width 의 브라우저 호환성은 다음과 같습니다.
     }
     a:after {
       display: inline;
-      content: '(' attr(href) ')';
+      content: "(" attr(href) ")";
     }
   }
   ```
 
 - speech
+
   페이지를 읽어주는 화면 낭독기를 대상으로 하는 타입입니다.
 
 #### 3.5.4 미디어특징
@@ -664,10 +681,13 @@ column-width 의 브라우저 호환성은 다음과 같습니다.
 조건문에 작성할 수 있는 주요 미디어특징입니다.
 
 - (min/max) width / height
+
   뷰포트의 너비와 높이로 뷰포트의 크기는 HTML body 콘텐츠를 표시하는 영역으로 실제 스크린의 크기와는 다릅니다. 반응형 웹 구현시 가장 일반적으로 사용하는 조건입니다.
   `(width:00px)` 이라고 선언하면 뷰포트 너비가 정확히 00px 에서만 적용되기 때문에 보통 min/max 접두사를 붙이고 사용합니다.
   <br>
+
 - (min/max) device-width / device-height (deprecated)
+
   스크린의 너비와 높이로 스크린은 출력 장치가 픽셀을 표시할 수 있는 모든 영역입니다.
   <br>
 
@@ -748,44 +768,55 @@ column-width 의 브라우저 호환성은 다음과 같습니다.
 }
 ```
 
-##### 1) 데스크탑 중심(desktop first)
+- 데스크탑 중심(desktop first)
 
-스마트폰이 활성화되기 전에는 대부분의 웹페이지가 데스크탑 모니터 사이즈를 중심으로 제작되었습니다. PC로 볼 경우의 스타일을 먼저 지정해 준 후, 모바일 스타일을 덮어쓰기 형태로 지정해 주는 방식입니다.
+  스마트폰이 활성화되기 전에는 대부분의 웹페이지가 데스크탑 모니터 사이즈를 중심으로 제작되었습니다. PC로 볼 경우의 스타일을 먼저 지정해 준 후, 모바일 스타일을 덮어쓰기 형태로 지정해 주는 방식입니다.
 
-```css
-/* desktop first */
-@media screen and (max-width: 1200px) {
-  ...;
-}
-@media screen and (max-width: 768px) {
-  ...;
-}
-@media screen and (max-width: 480px) {
-  ...;
-}
-```
+  ```css
+  /* desktop first */
+  @media screen and (max-width: 1200px) {
+    ...;
+  }
+  @media screen and (max-width: 768px) {
+    ...;
+  }
+  @media screen and (max-width: 480px) {
+    ...;
+  }
+  ```
 
-##### 2) 모바일 중심(mobile first)
+- 모바일 중심(mobile first)
 
-모바일의 스타일을 먼저 지정해 준 후, PC 스타일을 지정해 주는 방식입니다.  
-작은 화면(예: 휴대폰)에 대한 간단한 레이아웃을 만든 다음, 화면이 점점 커졌을 때 화면 폭이 충분하다면 다음 분기점을 설정하고 다단 레이아웃을 구현하는 방식입니다. 이렇게 하면 내용에 따라 분기점을 최적화하고 가능한 최소 분기점 수를 유지할 수 있습니다.
+  모바일의 스타일을 먼저 지정해 준 후, PC 스타일을 지정해 주는 방식입니다.  
+  작은 화면(예: 휴대폰)에 대한 간단한 레이아웃을 만든 다음, 화면이 점점 커졌을 때 화면 폭이 충분하다면 다음 분기점을 설정하고 다단 레이아웃을 구현하는 방식입니다. 이렇게 하면 내용에 따라 분기점을 최적화하고 가능한 최소 분기점 수를 유지할 수 있습니다.
 
-```css
-/* mobile first */
-@media screen and (max-width: 480px) {
-  ...;
-}
-@media screen and (max-width: 768px) {
-  ...;
-}
-@media screen and (max-width: 1200px) {
-  ...;
-}
-```
+  ```css
+  /* mobile first */
+  @media screen and (max-width: 480px) {
+    ...;
+  }
+  @media screen and (max-width: 768px) {
+    ...;
+  }
+  @media screen and (max-width: 1200px) {
+    ...;
+  }
+  ```
 
 ## 참고 자료
 
 - [MDN 반응형 디자인](https://developer.mozilla.org/ko/docs/Learn/CSS/CSS_layout/Responsive_Design)
+- [MDN-CSS values and units](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Values_and_Units)
+- [MDN-Using media queries](https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries)
+- [MDN-Beginner's guide to media queries](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Media_queries)
+- [MDN-Multiple-column layout](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Multiple-column_Layout)
+- [MDN-calc()](<https://developer.mozilla.org/ko/docs/Web/CSS/calc()>)
+- [MDN-clamp()](<https://developer.mozilla.org/en-US/docs/Web/CSS/clamp()>)
+- [MDN- 표준 메타데이터 이름](https://developer.mozilla.org/ko/docs/Web/HTML/Element/meta/name)
+- [MDN- 반응형 이미지](https://developer.mozilla.org/ko/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images)
+- [MDN- \<picture\>: The Picture element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/picture)
+- [MDN- \<source\>: The Media or Image Source element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/source)
+- [w3-Flexible Lengths: the fr unit](https://www.w3.org/TR/css-grid-1/#fr-unit)
 - [Google Developers](https://developers.google.com/web/fundamentals/design-and-ux/responsive/patterns?hl=ko)
 - [비즈플로우](http://beesflow.co.kr/%eb%b0%98%ec%9d%91%ed%98%95%ec%9b%b9%ec%9d%b4%eb%9e%80/)
 - [나무위키](https://namu.wiki/w/%EB%B0%98%EC%9D%91%ED%98%95%20%EC%9B%B9?from=%EB%B0%98%EC%9D%91%ED%98%95%20%EC%9B%B9%20%EB%94%94%EC%9E%90%EC%9D%B8)
@@ -793,19 +824,7 @@ column-width 의 브라우저 호환성은 다음과 같습니다.
 - [yamoo9님 자료2](https://github.com/yamoo9/cj-olive-networks/wiki/%EC%A0%81%EC%9D%91%ED%98%95-%EC%9B%B9-%EB%94%94%EC%9E%90%EC%9D%B8-VS-%EB%B0%98%EC%9D%91%ED%98%95-%EC%9B%B9-%EB%94%94%EC%9E%90%EC%9D%B8)
 - [Darum](https://daumui.tistory.com/41?category=481955)
 - [fjcalzado의 깃허브 예제](https://fjcalzado.github.io/DemoSeries-Responsive-Layout-Patterns/pages/layout-shifter.html)
-- [MDN-CSS values and units](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Values_and_Units)
-- [MDN-Using media queries](https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries)
-- [MDN-Beginner's guide to media queries](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Media_queries)
-- [MDN-Multiple-column layout](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Multiple-column_Layout)
-- [MDN-calc()](<https://developer.mozilla.org/ko/docs/Web/CSS/calc()>)
-- [MDN-clamp()](<https://developer.mozilla.org/en-US/docs/Web/CSS/clamp()>)
-- [w3-Flexible Lengths: the fr unit](https://www.w3.org/TR/css-grid-1/#fr-unit)
 - [반응형 웹 뚝딱 만들기 (1) - 뷰포트 메타태그와 미디어 쿼리](https://nykim.work/84)
 - [Understanding the Device Pixel Ratio](https://tomroth.com.au/dpr/)
-- [MDN - 표준 메타데이터 이름](https://developer.mozilla.org/ko/docs/Web/HTML/Element/meta/name)
 - [HTML IMG의 srcset과 sizes 속성(updated)](https://heropy.blog/2019/06/16/html-img-srcset-and-sizes/)
 - [TCPSchool - HTML \<picture\> 태그](http://www.tcpschool.com/html-tags/picture)
-- [MDN - 반응형 이미지](https://developer.mozilla.org/ko/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images)
-- [MDN - \<picture\>: The Picture element
-  ](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/picture)
-- [MDN - \<source\>: The Media or Image Source element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/source)
